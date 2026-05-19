@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bc4b89d9f735a14690e3d322f448a55, type: 3}
+  m_Name: SoalEasy_1
+  m_EditorClassIdentifier: Assembly-CSharp::SO_SoalData
+  DifficultyLevel: 0
+  Soal:
+  - ImageSoal: {fileID: 0}
+    TextSoal: Jam berapakah yang ditunjukkan pada gambar berikut? (8:00)
+    OpsiSoal:
+    - 8:00
+    - 9:00
+    - 7:00
+    JawabanSoal: 8:00
+  - ImageSoal: {fileID: 0}
+    TextSoal: Jarum panjang menunjuk ke angka 6 dan jarum pendek di antara 12 dan 1. Jam berapa itu? (12:30)
+    OpsiSoal:
+    - 11:30
+    - 12:30
+    - 12:00
+    JawabanSoal: 12:30
+  - ImageSoal: {fileID: 0}
+    TextSoal: Jika saat ini tepat jam dua siang, manakah format yang benar? (2:00)
+    OpsiSoal:
+    - 2:00
+    - 1:30
+    - 3:00
+    JawabanSoal: 2:00
+  - ImageSoal: {fileID: 0}
+    TextSoal: Jam berapakah yang ditunjukkan pada gambar berikut? (5:30)
+    OpsiSoal:
+    - 5:00
+    - 6:30
+    - 5:30
+    JawabanSoal: 5:30
+  - ImageSoal: {fileID: 0}
+    TextSoal: Jam berapakah yang ditunjukkan pada gambar berikut? (10:00)
+    OpsiSoal:
+    - 10:00
+    - 11:00
+    - 9:00
+    JawabanSoal: 10:00
