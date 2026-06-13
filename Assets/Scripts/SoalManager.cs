@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SoalManager : MonoBehaviour
 {
     public SO_ChosenSoal chosenSoalCarrier;
+    public ClockController clockController;
 
     [Header("UI Config Soal")]
     [SerializeField] private TextMeshProUGUI soalTxt;
@@ -29,8 +30,9 @@ public class SoalManager : MonoBehaviour
 
     [SerializeField] private GameObject endPanel;
     [SerializeField] private float timer;
-    
+
     private SO_SoalData _currentSoalData;
+    private List<Soal> _randomizeSO_SoalData = new List<Soal>();
     private Soal _currentSoal;
     private int _stepIndex;
     private int _wrongCount;
@@ -38,8 +40,43 @@ public class SoalManager : MonoBehaviour
 
     private void Start()
     {
-        _currentSoalData = chosenSoalCarrier.ChosenSoal;
-        _currentSoal = _currentSoalData.Soal[0];
+        // 1. Ambil data asli
+        var originalSoals = chosenSoalCarrier.ChosenSoal.Soal;
+
+        // 2. Buat list baru agar tidak merusak SO asli
+        List<Soal> shuffledSoals = new List<Soal>(originalSoals);
+
+        // 3. Shuffle Soal
+        for (int i = 0; i < shuffledSoals.Count; i++)
+        {
+            Soal temp = shuffledSoals[i];
+            int randomIndex = Random.Range(i, shuffledSoals.Count);
+            shuffledSoals[i] = shuffledSoals[randomIndex];
+            shuffledSoals[randomIndex] = temp;
+        }
+
+        // 4. Shuffle Opsi Jawaban (Copy dulu list opsinya agar tidak merusak data SO)
+        foreach (var soal in shuffledSoals)
+        {
+            // Buat copy list opsi agar tidak merusak data aslinya
+            List<string> shuffledOpsi = new List<string>(soal.OpsiSoal);
+
+            // Shuffle manual
+            for (int i = 0; i < shuffledOpsi.Count; i++)
+            {
+                string temp = shuffledOpsi[i];
+                int randomIndex = Random.Range(i, shuffledOpsi.Count);
+                shuffledOpsi[i] = shuffledOpsi[randomIndex];
+                shuffledOpsi[randomIndex] = temp;
+            }
+
+            // Sekarang update property objek soal dengan list yang sudah diacak
+            soal.OpsiSoal = shuffledOpsi;
+        }
+
+        // 5. Gunakan hasil akhir
+        _randomizeSO_SoalData = shuffledSoals;
+        _currentSoal = _randomizeSO_SoalData[0];
 
         UpdateUI();
     }
@@ -57,13 +94,13 @@ public class SoalManager : MonoBehaviour
             {
                 timer = 0;
                 timerTxt.text = "0";
-                SceneManager.LoadScene("LevelGagal");
+                SceneManager.LoadScene("LevelGagalWaktu");
             }
         }
 
         if (_wrongCount >= 3)
         {
-            SceneManager.LoadScene("LevelGagal");
+            SceneManager.LoadScene("LevelGagalSalah");
         }
     }
 
@@ -78,14 +115,28 @@ public class SoalManager : MonoBehaviour
             wrongIndicatorImage[_wrongCount - 1].sprite = wrongIndicator;
         }
 
-        if (_stepIndex >= _currentSoalData.Soal.Count)
+        if (_stepIndex >= _randomizeSO_SoalData.Count)
         {
             isSoalEnd = true;
-            endPanel.SetActive(true);
+
+            // Save data
+            int levelStage = PlayerPrefs.GetInt("LevelProgress", 1);
+            levelStage++;
+
+            if (levelStage > 3)
+            {
+                levelStage = 4;
+            }
+
+            PlayerPrefs.SetInt("LevelProgress", levelStage);
+            PlayerPrefs.Save();
+
+            SceneManager.LoadScene("LevelBerhasil");
             return;
         }
 
-        _currentSoal = _currentSoalData.Soal[_stepIndex];
+        //_currentSoal = _currentSoalData.Soal[_stepIndex];
+        _currentSoal = _randomizeSO_SoalData[_stepIndex];
         UpdateUI();
     }
 
@@ -94,7 +145,7 @@ public class SoalManager : MonoBehaviour
         //gambarSoalImg.sprite = _currentSoal.ImageSoal;
 
         soalTxt.text = _currentSoal.TextSoal;
-        currentSoalTxt.text = $"{_stepIndex + 1}/{_currentSoalData.Soal.Count.ToString()}";
+        currentSoalTxt.text = $"{_stepIndex + 1}/{_randomizeSO_SoalData.Count.ToString()}";
 
         opsiATxt.text = _currentSoal.OpsiSoal[0];
         opsiBTxt.text = _currentSoal.OpsiSoal[1];
@@ -112,5 +163,11 @@ public class SoalManager : MonoBehaviour
 
         opsiCBtn.onClick.RemoveAllListeners();
         opsiCBtn.onClick.AddListener(() => MemilihJawaban(opsiCBtn.GetComponent<ButtonsData>().holdAnswer));
+
+        if (clockController != null)
+        {
+            clockController.SetClockFromstring(_currentSoal.JawabanSoal);
+            Debug.Log(_currentSoal.JawabanSoal);
+        }
     }
 }

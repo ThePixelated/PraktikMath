@@ -8,4 +8,10 @@ public class SceneManagement : MonoBehaviour
     {
         SceneManager.LoadScene(targetScene);
     }
+
+    public void GoToNextLevelBtn()
+    {
+
+        LevelManager.Instance.NextLevel();
+    }
 }

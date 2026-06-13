@@ -15,14 +15,23 @@ EditorBuildSettings:
     path: Assets/Scenes/CaraMain.unity
     guid: cf98c3edf0674e9449d15606160e4a95
   - enabled: 1
-    path: Assets/Scenes/LevelGagal.unity
+    path: Assets/Scenes/LevelGagalWaktu.unity
     guid: fde6d74e71607b34db302b7f6ea8a2bf
+  - enabled: 1
+    path: Assets/Scenes/LevelGagalSalah.unity
+    guid: 6cfcacec9eb60674cbae1a55d2d3dd71
+  - enabled: 1
+    path: Assets/Scenes/LevelBerhasil.unity
+    guid: f69f27217ff30424c88145eabaa15825
   - enabled: 1
     path: Assets/Scenes/PilihLevel.unity
     guid: 6bd042d9b0ccf6040b37aab0192e86ea
   - enabled: 1
     path: Assets/Scenes/Soal.unity
     guid: d0ac3ca1986eaea4ea311a2fb91764bf
+  - enabled: 1
+    path: Assets/Scenes/Materi.unity
+    guid: aa97368dde1787b45b8bfbb7557d9af8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

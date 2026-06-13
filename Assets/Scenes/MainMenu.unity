@@ -546,7 +546,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 739729306}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1786691823}
+        m_TargetAssemblyTypeName: SceneManagement, Assembly-CSharp
+        m_MethodName: SceneLoader
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Materi
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &739729306
 MonoBehaviour:
   m_ObjectHideFlags: 0
